@@ -7,6 +7,23 @@
 # une puissance d'attaque et une défense (par défaut 0).
 # La défense permet de se protéger des dégâts subis.
 
+class Pokemon:
+    def __init__(self, nom, pv, level, atk, defense):
+        self.__nom = nom
+        self.__pv = pv
+        self.level = level
+        self.atk = atk
+        self.defense = defense
+
+    def get(self):
+        return self.__nom, self.__pv, self.level, self.atk, self.defense
+
+    def attaquer(self):
+       print(self.__nom, 'attaque', self.atk)
+
+    def fuir(self):
+        print(self.__nom, 'prend la fuite.')
+
 # il existe 18 types de Pokémon.
 
 # Chaque Pokémon possède au minimum un type qui conditionne les caractéristiques du
