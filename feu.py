@@ -1,10 +1,8 @@
 from pokemon import Pokemon
 
 class Feu(Pokemon):
-    def __init__(self, __nom, pv, level, atk, defense):
-        super().__init__(__nom, pv, level, atk, defense)
-
-    def get(self):
-        return self.__nom, self.__pv, self.level, self.atk, self.defense
-
-Dracaufeu = Feu('Dracaufeu', 150, 40, 'Lance-Flammes', 60)
+    def __init__(self, nom, level, atk, defense):
+        super().__init__(nom, level, atk, defense)
+        self.modif_hp(10)
+        self.atk += 20
+        self.defense += 10

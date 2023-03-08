@@ -8,33 +8,35 @@
 # La défense permet de se protéger des dégâts subis.
 
 class Pokemon:
-    def __init__(self, nom, pv, level, atk, defense):
+    def __init__(self, nom, level, atk, defense):
         self.__nom = nom
-        self.__pv = pv
+        self.__pv = 100
         self.level = level
         self.atk = atk
         self.defense = defense
 
-    def get(self):
-        return self.__nom, self.__pv, self.level, self.atk, self.defense
+    def name(self): 
+        return self.__nom
+
+    def hp(self): 
+        return self.__pv
+    
+    def modif_hp(self, newhp):
+        self.__pv += newhp
+    
+    def set_hp(self, newhp):
+        self.__pv -= newhp
 
     def attaquer(self):
-       print(self.__nom, 'attaque', self.atk)
+       print(self.__nom, 'attaque', self.atk) # Attaquer
 
     def fuir(self):
-        print(self.__nom, 'prend la fuite.')
-
-# il existe 18 types de Pokémon.
+        print(self.__nom, 'prend la fuite.') # Prendre la fuite
 
 # Chaque Pokémon possède au minimum un type qui conditionne les caractéristiques du
 # Pokémon, le nombre de points de vie, la puissance d'attaque, sa défense...
 
 # ------------------------------
-
-# Un système de combat entre deux Pokémon doit être développé.
-
-# Lors des combats, la vie des Pokémon est vérifiée. Si la vie d'un Pokémon est à zéro,
-# un message est affiché en console avec le nom du Pokémon gagnant.
 
 # il peut arriver qu'un Pokémon loupe son attaque.
 
@@ -43,9 +45,6 @@ class Pokemon:
 # Les Pokémon seront sauvegardés dans un fichier nommé pokédex.json, une
 # vérification doit être effectuée afin d'éviter les doublons. Cet outil permet d'afficher
 # l'ensemble des Pokémon rencontrés ainsi que leur nombre.
-
-# En prenant en compte les informations ci-dessus, écrire la classe "Pokemon", dont
-# certains de ses attributs doivent être privés (nom et point de vie).
 
 # ------------------------------
 
@@ -77,6 +76,3 @@ class Pokemon:
 # Lors du démarrage de la partie, le joueur doit renseigner avec quel
 # Pokémon il veut jouer, selon la liste des Pokémon. L’adversaire est
 # # quant à lui choisi de façon aléatoire dans le fichier “pokemon.json”.
-
-# Faites combattre deux Pokémon.
-# Chaque classe doit être dans un fichier séparé.

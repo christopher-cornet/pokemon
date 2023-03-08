@@ -1,10 +1,8 @@
 from pokemon import Pokemon
 
 class Terre(Pokemon):
-    def __init__(self, nom, pv, level, atk, defense):
-        super().__init__(nom, pv, level, atk, defense)
-
-    def get(self):
-        print(self.atk)
-
-Taupiqueur = Terre('Taupiqueur', 90, 25, 'Séisme', 50)
+    def __init__(self, nom, level, atk, defense):
+        super().__init__(nom, level, atk, defense)
+        self.modif_hp(30)
+        self.atk += 10
+        self.defense += 20
