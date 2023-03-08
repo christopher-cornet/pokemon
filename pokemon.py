@@ -8,11 +8,12 @@
 # La défense permet de se protéger des dégâts subis.
 
 class Pokemon:
-    def __init__(self, nom, level, atk, defense):
+    def __init__(self, nom, level, atk, atk_name, defense):
         self.__nom = nom
         self.__pv = 100
         self.level = level
         self.atk = atk
+        self.atk_name = atk_name
         self.defense = defense
 
     def name(self): 
