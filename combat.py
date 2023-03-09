@@ -7,8 +7,8 @@ import random
 
 class Combat:
     def __init__(self):
-        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 60)
-        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet à O', 50)
+        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 60) # 110 PV
+        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet à O', 50) # 115 PV
         self.fighting = True
 
     # victoire pokemon 1
@@ -55,32 +55,40 @@ class Combat:
             print('Que doit faire', self.pokemon1.name(), '?', 'attaquer', '/', 'fuir', self.pokemon1.hp(), 'PV')
             p1 = input()
             if p1 == 'attaquer':
-                self.pokemon1.attaquer()
-                self.pokemon2.set_hp(self.pokemon1.atk) # retirer les pv de pokemon2
-                # Message de victoire et KO
-                if self.pokemon2.hp() <= 0: # victoire pokemon1
-                    self.verif_life()
-                    break
-                elif self.pokemon1.hp() <= 0: # victoire pokemon2
-                    self.verif_life()
-                    break
-                # Joueur 2
-                print('Que doit faire', self.pokemon2.name(), '?', 'attaquer', '/', 'fuir', self.pokemon2.hp(), 'PV')
-                p2 = input()
-                # Message de victoire et KO
-                if self.pokemon2.hp() <= 0: # victoire pokemon1
-                    self.verif_life()
-                    break
-                elif self.pokemon1.hp() <= 0: # victoire pokemon2
-                    self.verif_life()
-                    break
-            elif p1 == 'fuir':
+                self.miss_attack()
+                if self.miss_attack() == 1:
+                    self.pokemon1.attaquer()
+                    self.pokemon2.set_hp(self.pokemon1.atk) # retirer les pv de pokemon2
+                    # Message de victoire et KO
+                    if self.pokemon2.hp() <= 0: # victoire pokemon1
+                        self.verif_life()
+                        break
+                    elif self.pokemon1.hp() <= 0: # victoire pokemon2
+                        self.verif_life()
+                        break
+                else:
+                    print(self.pokemon1.name(), 'a raté son attaque.')
+            # Joueur 2
+            print('Que doit faire', self.pokemon2.name(), '?', 'attaquer', '/', 'fuir', self.pokemon2.hp(), 'PV')
+            p2 = input()
+            if p2 == 'attaquer':
+                self.miss_attack()
+                if self.miss_attack() == 1:
+                    self.pokemon2.attaquer()
+                    self.pokemon1.set_hp(self.pokemon2.atk) # retirer les pv de pokemon2
+                    # Message de victoire et KO
+                    if self.pokemon2.hp() <= 0: # victoire pokemon1
+                        self.verif_life()
+                        break
+                    elif self.pokemon1.hp() <= 0: # victoire pokemon2
+                        self.verif_life()
+                        break
+                else:
+                    print(self.pokemon2.name(), 'a raté son attaque.')
+            if p1 == 'fuir':
                 self.pokemon1.fuir()
                 break
-            if p2 == 'attaquer':
-                self.pokemon2.attaquer()
-                self.pokemon1.set_hp(self.pokemon2.atk) # retirer les pv de pokemon2
-            elif p2 == 'fuir':
+            if p2 == 'fuir':
                 self.pokemon2.fuir()
                 break
         # return le nom du vainqueur comme demandé.
