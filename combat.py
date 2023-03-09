@@ -38,12 +38,62 @@ class Combat:
         elif self.pokemon2.hp() <= 0: # pokemon2 KO, vainqueur = pokemon1
             print('Méthode qui return le vainqueur du combat:', self.pokemon1.name(), '!')
 
+    # méthode qui renvoie le nom du perdant.
+    def loser(self):
+        print() # espace pour la lisibilité
+        if self.pokemon1.hp() <= 0: # pokemon1 KO, perdant = pokemon2
+            print('Méthode qui return le perdant du combat:', self.pokemon1.name(), '...')
+        elif self.pokemon2.hp() <= 0: # pokemon2 KO, perdant = pokemon1
+            print('Méthode qui return le perdant du combat:', self.pokemon2.name(), '...')
+
     # Possibilité de rater son attaque
     def miss_attack(self):
         miss = random.randint(0, 1) # 0 = rate son attaque et 1 = touche l'adversaire
         return miss
+    
+    # récupère le type de l'adversaire et récupère sa puissance d’attaque et le multiplie
+    def get_type(self):
+        if type(self.pokemon2) == Eau: # Adversaire Eau
+            if type(self.pokemon1) == Feu: # Joueur Feu vs Eau
+                self.pokemon1.atk = self.pokemon1.atk * 0.5
+            elif type(self.pokemon1) == Terre: # Joueur Terre vs Eau
+                self.pokemon1.atk = self.pokemon1.atk * 2
+            elif type(self.pokemon1) == Normal: # Joueur Normal vs Eau
+                self.pokemon1.atk = self.pokemon1.atk * 0.75
+            else:
+                self.pokemon1.atk = self.pokemon1.atk * 1
+        elif type(self.pokemon2) == Feu: # Adversaire Feu
+            if type(self.pokemon1) == Eau: # Joueur Eau vs Feu
+                self.pokemon1.atk = self.pokemon1.atk * 2
+            elif type(self.pokemon1) == Terre: # Joueur Terre vs Feu
+                self.pokemon1.atk = self.pokemon1.atk * 0.5
+            elif type(self.pokemon1) == Normal: # Joueur Normal vs Feu
+                self.pokemon1.atk = self.pokemon1.atk * 0.75
+            else:
+                self.pokemon1.atk = self.pokemon1.atk * 1
+        elif type(self.pokemon2) == Terre: # Adversaire Terre
+            if type(self.pokemon1) == Eau: # Joueur Eau vs Terre
+                self.pokemon1.atk = self.pokemon1.atk * 0.5
+            elif type(self.pokemon1) == Feu: # Joueur Feu vs Terre
+                self.pokemon1.atk = self.pokemon1.atk * 2
+            elif type(self.pokemon1) == Normal: # Joueur Normal vs Terre
+                self.pokemon1.atk = self.pokemon1.atk * 0.75
+            else:
+                self.pokemon1.atk = self.pokemon1.atk * 1
+        elif type(self.pokemon2) == Normal:
+            if type(self.pokemon1) == Eau: # Joueur Eau vs Normal
+                self.pokemon1.atk = self.pokemon1.atk * 1
+            elif type(self.pokemon1) == Feu: # Joueur Feu vs Normal
+                self.pokemon1.atk = self.pokemon1.atk * 1
+            elif type(self.pokemon1) == Normal: # Joueur Terre vs Normal
+                self.pokemon1.atk = self.pokemon1.atk * 1
+            else:
+                self.pokemon1.atk = self.pokemon1.atk * 1
+        else:
+            print('Type invalide.')
 
     def fight(self):
+        self.get_type()
         while self.fighting:
             if self.pokemon2.hp() <= 0: # victoire pokemon1
                 self.verif_life()
@@ -93,6 +143,7 @@ class Combat:
                 break
         # return le nom du vainqueur comme demandé.
         self.winner()
+        self.loser()
 
 instance_combat = Combat()
 instance_combat.fight()
