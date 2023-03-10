@@ -4,11 +4,12 @@ from feu import *
 from normal import *
 from terre import *
 import random
+import json
 
 class Combat:
     def __init__(self):
-        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 60) # 110 PV
-        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet à O', 50) # 115 PV
+        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 10) # 110 PV
+        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet à O', 20) # 115 PV
         self.fighting = True
 
     # victoire pokemon 1
@@ -29,22 +30,22 @@ class Combat:
         elif self.pokemon1.hp() <= 0: # le pokémon1 est KO
             self.win_pkmn2()
             self.fighting = False
-        
+
     # méthode qui renvoie le nom du vainqueur.
     def winner(self):
         print() # espace pour la lisibilité
         if self.pokemon1.hp() <= 0: # pokemon1 KO, vainqueur = pokemon2
-            print('Méthode qui return le vainqueur du combat:', self.pokemon2.name(), '!')
+            print('Vainqueur du combat:', self.pokemon2.name(), '!')
         elif self.pokemon2.hp() <= 0: # pokemon2 KO, vainqueur = pokemon1
-            print('Méthode qui return le vainqueur du combat:', self.pokemon1.name(), '!')
+            print('Vainqueur du combat:', self.pokemon1.name(), '!')
 
     # méthode qui renvoie le nom du perdant.
     def loser(self):
         print() # espace pour la lisibilité
         if self.pokemon1.hp() <= 0: # pokemon1 KO, perdant = pokemon2
-            print('Méthode qui return le perdant du combat:', self.pokemon1.name(), '...')
+            print('Perdant du combat:', self.pokemon1.name(), '...')
         elif self.pokemon2.hp() <= 0: # pokemon2 KO, perdant = pokemon1
-            print('Méthode qui return le perdant du combat:', self.pokemon2.name(), '...')
+            print('Perdant du combat:', self.pokemon2.name(), '...')
 
     # Possibilité de rater son attaque
     def miss_attack(self):
@@ -92,8 +93,17 @@ class Combat:
         else:
             print('Type invalide.')
 
+    # Modifier les pv en fonction de la défense pokémon2
+    def pkmn1_hp_def(self):
+        result = self.pokemon2.atk - self.pokemon1.defense
+        return result
+    
+    def pkmn2_hp_def(self):
+        result = self.pokemon1.atk - self.pokemon2.defense
+        return result
+
     def fight(self):
-        self.get_type()
+        self.get_type() # multiplie les dégâts de pokemon1 selon le type de pokemon2
         while self.fighting:
             if self.pokemon2.hp() <= 0: # victoire pokemon1
                 self.verif_life()
@@ -108,7 +118,7 @@ class Combat:
                 self.miss_attack()
                 if self.miss_attack() == 1:
                     self.pokemon1.attaquer()
-                    self.pokemon2.set_hp(self.pokemon1.atk) # retirer les pv de pokemon2
+                    self.pokemon2.set_hp(self.pkmn2_hp_def()) # retirer les pv de pokemon2
                     # Message de victoire et KO
                     if self.pokemon2.hp() <= 0: # victoire pokemon1
                         self.verif_life()
@@ -125,7 +135,7 @@ class Combat:
                 self.miss_attack()
                 if self.miss_attack() == 1:
                     self.pokemon2.attaquer()
-                    self.pokemon1.set_hp(self.pokemon2.atk) # retirer les pv de pokemon2
+                    self.pokemon1.set_hp(self.pkmn1_hp_def()) # retirer les pv de pokemon1
                     # Message de victoire et KO
                     if self.pokemon2.hp() <= 0: # victoire pokemon1
                         self.verif_life()
