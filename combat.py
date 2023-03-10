@@ -9,7 +9,7 @@ import json
 class Combat:
     def __init__(self):
         self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 10) # 110 PV
-        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet à O', 20) # 115 PV
+        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet a O', 20) # 115 PV
         self.fighting = True
 
     # victoire pokemon 1
@@ -93,7 +93,7 @@ class Combat:
         else:
             print('Type invalide.')
 
-    # Modifier les pv en fonction de la défense pokémon2
+    # Modifier les pv en fonction de la défense pokémon1 et pokémon2
     def pkmn1_hp_def(self):
         result = self.pokemon2.atk - self.pokemon1.defense
         return result
@@ -101,6 +101,18 @@ class Combat:
     def pkmn2_hp_def(self):
         result = self.pokemon1.atk - self.pokemon2.defense
         return result
+    
+    # Les Pokémon sont sauvegardés dans un fichier nommé pokedex.json
+    def save_pkmn_pokedex(self):
+        Pokedex = {
+            "nom": self.pokemon1.name(),
+            "pv": self.pokemon1.hp(),
+            "atk": self.pokemon1.atk,
+            "atk_name": self.pokemon1.atk_name,
+            "defense": self.pokemon1.defense
+        }
+        with open('pokedex.json', 'a') as file:
+            json.dump(Pokedex, file, indent=4) # écrire en JSON
 
     def fight(self):
         self.get_type() # multiplie les dégâts de pokemon1 selon le type de pokemon2
@@ -155,5 +167,19 @@ class Combat:
         self.winner()
         self.loser()
 
+# Menu de début de partie
+print('Lancer une partie: start')
+print('Ajouter un Pokémon: add')
+print('Accéder au Pokédex: pokedex')
+
+decision = input() # Prend en compte l'action à executer
+
 instance_combat = Combat()
-instance_combat.fight()
+instance_combat.save_pkmn_pokedex()
+
+# Lancer une partie
+if decision == 'start':
+    instance_combat.fight()
+elif decision == 'add':
+    print('Quel pokémon ajouter ?')
+    which_pkmn_add = input()
