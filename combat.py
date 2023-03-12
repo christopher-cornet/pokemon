@@ -8,8 +8,10 @@ import json
 
 class Combat:
     def __init__(self):
-        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 10) # 110 PV
-        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet a O', 20) # 115 PV
+        self.pokemon1 = Feu('Dracaufeu', 40, 70, 'Lances-Flammes', 10)
+        self.pokemon2 = Eau('Maraiste', 25, 35, 'Pistolet a O', 20)
+        self.pokemon3 = Normal('Kangourex', 36, 25, 'Ultimapoing', 15)
+        self.pokemon4 = Terre('Groudon', 60, 80, 'Seisme', 20)
         self.fighting = True
 
     # victoire pokemon 1
@@ -103,16 +105,20 @@ class Combat:
         return result
     
     # Les Pokémon sont sauvegardés dans un fichier nommé pokedex.json
-    def save_pkmn_pokedex(self):
+    def save_pkmn_pokedex(self, filename="pokedex.json"):
         Pokedex = {
-            "nom": self.pokemon1.name(),
-            "pv": self.pokemon1.hp(),
-            "atk": self.pokemon1.atk,
-            "atk_name": self.pokemon1.atk_name,
-            "defense": self.pokemon1.defense
+            "nom": self.pokemon2.name(),
+            "pv": self.pokemon2.hp(),
+            "atk": self.pokemon2.atk,
+            "atk_name": self.pokemon2.atk_name,
+            "defense": self.pokemon2.defense
         }
-        with open('pokedex.json', 'a') as file:
-            json.dump(Pokedex, file, indent=4) # écrire en JSON
+
+        with open(filename, 'r+') as file:
+            file_data = json.load(file) # Charger les données sous le format JSON (key: value)
+            file_data["Pokedex"].append(Pokedex) # Ajouter le dictionnaire Pokedex dans "Pokedex"
+            file.seek(0) # Définit la position actuelle du fichier
+            json.dump(file_data, file, indent=4) # Ecrire dans le fichier JSON
 
     def fight(self):
         self.get_type() # multiplie les dégâts de pokemon1 selon le type de pokemon2
@@ -167,15 +173,15 @@ class Combat:
         self.winner()
         self.loser()
 
+instance_combat = Combat()
+instance_combat.save_pkmn_pokedex()
+
 # Menu de début de partie
 print('Lancer une partie: start')
 print('Ajouter un Pokémon: add')
 print('Accéder au Pokédex: pokedex')
 
 decision = input() # Prend en compte l'action à executer
-
-instance_combat = Combat()
-instance_combat.save_pkmn_pokedex()
 
 # Lancer une partie
 if decision == 'start':
