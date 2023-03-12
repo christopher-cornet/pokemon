@@ -120,7 +120,15 @@ class Combat:
             file.seek(0) # Définit la position actuelle du fichier
             json.dump(file_data, file, indent=4) # Ecrire dans le fichier JSON
 
+    # Print le Pokedex depuis le menu
+    def print_pokedex(self):
+        with open("pokedex.json", 'r+') as file:
+            file_data = json.load(file) # Charger les données sous le format JSON (key: value)
+            return file_data
+
     def fight(self):
+        print(self.pokemon1.name(), 'vs', self.pokemon2.name())
+        self.save_pkmn_pokedex()
         self.get_type() # multiplie les dégâts de pokemon1 selon le type de pokemon2
         while self.fighting:
             if self.pokemon2.hp() <= 0: # victoire pokemon1
@@ -174,7 +182,6 @@ class Combat:
         self.loser()
 
 instance_combat = Combat()
-instance_combat.save_pkmn_pokedex()
 
 # Menu de début de partie
 print('Lancer une partie: start')
@@ -189,3 +196,5 @@ if decision == 'start':
 elif decision == 'add':
     print('Quel pokémon ajouter ?')
     which_pkmn_add = input()
+elif decision == 'pokedex':
+    print(instance_combat.print_pokedex())
