@@ -1,0 +1,39 @@
+{
+    "Pokemons": [
+        {
+            "nom": "Maraiste",
+            "pv": 115,
+            "atk": 55,
+            "atk_name": "Pistolet a O",
+            "defense": 30
+        },
+        {
+            "nom": "Rayquaza",
+            "pv": "50",
+            "atk": "90",
+            "atk_name": "Ultralaser",
+            "defense": "12"
+        },
+        {
+            "nom": "Dracaufeu",
+            "pv": 110,
+            "atk": 90,
+            "atk_name": "Lances-Flammes",
+            "defense": 20
+        },
+        {
+            "nom": "Kangourex",
+            "pv": 110,
+            "atk": 35,
+            "atk_name": "Ultimapoing",
+            "defense": 25
+        },
+        {
+            "nom": "Groudon",
+            "pv": 130,
+            "atk": 90,
+            "atk_name": "Seisme",
+            "defense": 40
+        }
+    ]
+}
